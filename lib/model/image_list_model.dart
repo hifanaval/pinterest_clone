@@ -12,26 +12,23 @@ String imageModelDartToJson(List<ImageModelDart> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
 class ImageModelDart {
-  String? id;
-
   DateTime? createdAt;
   DateTime? updatedAt;
   DateTime? promotedAt;
 
+  String? altDescription;
+
   Urls? urls;
-  ImageModelDartLinks? links;
 
   ImageModelDart({
-    this.id,
     this.createdAt,
     this.updatedAt,
     this.promotedAt,
+    this.altDescription,
     this.urls,
-    this.links,
   });
 
   factory ImageModelDart.fromJson(Map<String, dynamic> json) => ImageModelDart(
-        id: json["id"],
         createdAt: json["created_at"] == null
             ? null
             : DateTime.parse(json["created_at"]),
@@ -41,48 +38,16 @@ class ImageModelDart {
         promotedAt: json["promoted_at"] == null
             ? null
             : DateTime.parse(json["promoted_at"]),
+        altDescription: json["alt_description"],
         urls: json["urls"] == null ? null : Urls.fromJson(json["urls"]),
-        links: json["links"] == null
-            ? null
-            : ImageModelDartLinks.fromJson(json["links"]),
       );
 
   Map<String, dynamic> toJson() => {
-        "id": id,
         "created_at": createdAt?.toIso8601String(),
         "updated_at": updatedAt?.toIso8601String(),
         "promoted_at": promotedAt?.toIso8601String(),
+        "alt_description": altDescription,
         "urls": urls?.toJson(),
-        "links": links?.toJson(),
-      };
-}
-
-class ImageModelDartLinks {
-  String? self;
-  String? html;
-  String? download;
-  String? downloadLocation;
-
-  ImageModelDartLinks({
-    this.self,
-    this.html,
-    this.download,
-    this.downloadLocation,
-  });
-
-  factory ImageModelDartLinks.fromJson(Map<String, dynamic> json) =>
-      ImageModelDartLinks(
-        self: json["self"],
-        html: json["html"],
-        download: json["download"],
-        downloadLocation: json["download_location"],
-      );
-
-  Map<String, dynamic> toJson() => {
-        "self": self,
-        "html": html,
-        "download": download,
-        "download_location": downloadLocation,
       };
 }
 

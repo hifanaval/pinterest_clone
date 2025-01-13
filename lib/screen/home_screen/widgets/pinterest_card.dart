@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:machine_test_app/components/sized_box.dart';
 import 'package:machine_test_app/constants/color_class.dart';
+import 'package:machine_test_app/constants/textstyle_class.dart';
 import 'package:machine_test_app/model/image_list_model.dart';
 import 'package:machine_test_app/provider/image_provider.dart';
-import 'package:machine_test_app/utils/app_utils.dart';
 import 'package:provider/provider.dart';
 
 class PinterestCard extends StatelessWidget {
@@ -26,46 +27,55 @@ class PinterestCard extends StatelessWidget {
                 image[index].urls?.regular ?? "",
                 index,
               ),
-      child: Container(
-        margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          boxShadow: [
-            isDark ? AppColors.darkShadow : AppColors.lightShadow,
-          ],
-        ),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Stack(
-            children: [
-              AspectRatio(
-                aspectRatio: 0.7 + (index % 2) * 0.1,
-                child: Image.network(
-                  image[index % image.length].urls?.regular ?? "",
-                  fit: BoxFit.cover,
-                ),
-              ),
-              Positioned(
-                right: 8,
-                bottom: 8,
-                child: Container(
-                  padding: const EdgeInsets.all(8),
-                  decoration: BoxDecoration(
-                    color: AppColors.red,
-                    borderRadius: BorderRadius.circular(20),
+      child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 5),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [
+                isDark ? AppColors.darkShadow : AppColors.lightShadow,
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: Stack(
+                children: [
+                  AspectRatio(
+                    aspectRatio: 0.7 + (index % 2) * 0.1,
+                    child: Image.network(
+                      image[index % image.length].urls?.regular ?? "",
+                      fit: BoxFit.cover,
+                    ),
                   ),
-                  child: isDownloading
-                      ? AppUtils.loadingWidget(context)
-                      : const Icon(
-                          Icons.save_alt,
-                          color: AppColors.white,
-                          size: 20,
-                        ),
-                ),
-              )
-            ],
+                ],
+              ),
+            ),
           ),
-        ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 12.0),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  width: MediaQuery.of(context).size.width / 3.2,
+                  child: Text(
+                    image[index].altDescription ?? " ",
+                    style: TextStyleClass.primaryFont500(
+                        10, isDark ? AppColors.black : AppColors.white),
+                  ),
+                ),
+                const Spacer(),
+                const Icon(
+                  Icons.more_horiz,
+                  color: Colors.black,
+                  size: 14,
+                )
+              ],
+            ),
+          ),
+          kHeight(18)
+        ],
       ),
     );
   }

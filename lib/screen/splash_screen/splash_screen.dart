@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:machine_test_app/components/sized_box.dart';
 import 'package:machine_test_app/constants/color_class.dart';
 import 'package:machine_test_app/constants/image_class.dart';
+import 'package:machine_test_app/screen/bottom_navigation_screen/bottom_navigation.dart';
 import 'package:machine_test_app/screen/home_screen/home_screen.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -22,7 +23,10 @@ class _SplashScreenState extends State<SplashScreen> {
     Future.delayed(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeScreen()),
+        MaterialPageRoute(
+            builder: (context) => BottomNavigationScreen(
+                  selectedIndex: 0,
+                )),
       );
     });
   }
